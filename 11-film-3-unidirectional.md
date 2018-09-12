@@ -81,7 +81,7 @@ This way, when a user clicks, `onFaveToggle` will be called at a higher componen
 
 You've taken the `isFave` state out of `Fave` and will be passing a prop called `isFave` instead. In the `Fave` component, replace `this.state.isFave` with `this.props.isFave`. You'll send that information down from a parent component that knows this info.
 
-This is all you need to change in `Fave.js`! It will still check to see if the user has clicked the fave toggle button. The difference is that once the user clicks, instead of changing the `faves` array directly, the `handleClick` function will instead call `onFaveToggle` to do it instead.
+This is all you need to change in `Fave.js`! It will still check to see if the user has clicked the fave toggle button. The difference is that once the user clicks, instead of just changing the color of the fave icon, the `handleClick` function will instead call `onFaveToggle` to add/remove that film from the faves array in <code>App.js</code>.
 
 You'll define `onFaveToggle` in a higher component.
 
@@ -108,7 +108,9 @@ To recap, the `faves` state is going to hold the user's favorite films. Your goa
 
 To do this, you need to call `setState` and give it the updated array (you can't just update it directly; otherwise React won't know to re-render the components to reflect the changes). To accomplish this, you'll make a copy of the existing faves array, update it, then pass the copy to `setState`.
 
-First, just make a copy. Inside `handleFaveToggle`, use the JavaScript [`Array.prototype.slice()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice) method to make a copy and store it in a `const` variable called `faves`.
+First, just make a copy. Inside `handleFaveToggle`, use the JavaScript [`slice()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice) method to make a copy and store it in a `const` variable called `faves`. [`Why slice?`](https://stackoverflow.com/questions/7486085/copying-array-by-value-in-javascript)
+
+
 
 #### Step 7: Find the index of the passed film in the `faves` array
 
