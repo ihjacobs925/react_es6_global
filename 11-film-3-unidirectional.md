@@ -92,9 +92,9 @@ The `Fave` component is expecting a prop, but one doesn't exist yet. Let's chang
 You'll move the favorite toggle functionality all the way up to the `App` component - where the state for `films` and `faves` is stored.
 - In the `App` component, create a `handleFaveToggle()` function. It doesn't need to do anything yet, but soon you will update the `faves` array when a film is favorited or unfavorited. The `handleFaveToggle` function should accept a film object as an argument (this will be the film that the user is toggling).
 
-#### Step 5: Bind the handler to the component
+#### Step 5: Bind the handler to the component (skip if using arrow functions)
 
-As you saw previously, you need to bind your custom component methods to ensure `this` refers to the component within the body of the method.
+As you saw previously, you need to bind your custom component methods to ensure `this` refers to the component within the body of the method. *Remember that arrow functions do this for you!! This step is unecessary in ES6*
 
 Add the following to the `App` component's constructor:
 
@@ -114,7 +114,7 @@ First, just make a copy. Inside `handleFaveToggle`, use the JavaScript [`slice()
 
 #### Step 7: Find the index of the passed film in the `faves` array
 
-Now underneath the slice, use the JavaScript [`Array.prototype.indexOf()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf) method to store the position of the film in the array in a `const` variable called `filmIndex`.
+Now underneath the slice, use the JavaScript [`indexOf()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf) method to store the position of the film in the array in a `const` variable called `filmIndex`.
 
 Now, `filmIndex` will be an index value starting at `0`.
 
@@ -130,18 +130,21 @@ Write a conditional statement with the two cases. When adding a film to `faves`,
 
 #### Step 9: Change whether the film is in `faves`
 
-To remove a film that's already in the `faves` array, use the [`Array.prototype.splice()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice) method.
+To remove a film that's already in the `faves` array, use the [`splice()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice) method.
 
 To add a new film to the `faves` array, just [push](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push) it on to the end of the array.
 
 #### Step 10: Use `setState` to update the state of `faves`
 
-Now that you have updated the `faves` array, you need to call `setState` so React will re-render the appropriate components in the tree. You can make this very succinct by using object literal shorthand. It should look like this:
+Now that you have updated the `faves` array, you need to call `setState` so React will re-render the appropriate components in the tree. If you called the copy of the `faves` array the same name (`faves`), then you can make this very succinct by using object literal shorthand. It should look like this:
 
 ```js
 this.setState({faves})
+```
+Otherwise, if you called the copy `newfaves`, for example, you'll need to write out the entire key-value pair:
 
-// The above is exactly the same as this.setState({faves: faves})
+```js
+this.setState({faves: newFaves})
 ```
 
 #### Step 11: Pass the `handleFaveToggle` function to `FilmListing` through props
@@ -152,32 +155,23 @@ In the `App` component's `render` method, add a new prop to the `FilmListing` co
 
 #### Step 12: Pass the `onFaveToggle` function to `FilmRow` through props
 
-In the `FilmListing` component, you render one `FilmRow` component for each film in the `films` prop. You need to pass the `onFaveToggle` function down to each `FilmRow` (with the ultimate goal being that you call it in the `Fave` component), but you want to ensure that it passes the current film up to the `handleFaveToggle` method in the `App` component when called.
-
-To make this happen, you won't simply pass the function down to `FilmRow` as a prop as-is; you'll wrap it in another function that simply calls the `onFaveToggle` function passed down from App through props (remember, `onFaveToggle` in `FilmListing` is just a reference to `handleFaveToggle` in the `App` component).
-
-In the `FilmListing` component's `render` method, add the `onFaveToggle` variable. Replace your existing `map` function with this:
-
-```js
-const allFilms = this.props.films.map((film) => {
-  return (
-  <FilmRow
-  film={film}
-  key={film.id}
-  onFaveToggle={() => this.props.onFaveToggle(film)}
-  />
-)
-})
-```
-
+In the `FilmListing` component, you render one `FilmRow` component for each film in the `films` prop. You need to pass the `onFaveToggle` function down to each `FilmRow`.
+ 
+<details>
+  <summary>Your map function should look like this:</summary>
+  <code> const allFilms = this.props.films.map((film) => {return ( < FilmRow film={film} onFaveToggle {this.props.onFaveToggle} /> )}); </code>
+</details>
 
 #### Step 14: Pass the `onFaveToggle` function to `Fave` through props
 
-Now, the `FilmRow` component is receiving the `onFaveToggle` function as a prop. However, the `FilmRow` component doesn't need the function - the `Fave` component does. You'll pass it along as a prop to`Fave`.
+Now each `FilmRow` component has an `onFaveToggle` prop, but ultimately it's the `Fave` component that will call it. Note that in order to call `onFaveToggle`, we'll need to pass in *which* film as a parameter.
 
-In `FilmRow`'s `render` function, where you call the `Fave` component, add a prop called `onFaveToggle` and pass it the `onFaveToggle` prop that `FilmRow` received.
+In the `FilmRow` component's `render` method, pass the `onFaveToggle` to the fave component. Be sure to wrap it in an anonymous arrow function so you can include the current film as a parameter.
 
-Great! The `onFaveToggle` function is now being passed from the `App` component, where it's defined, down to the `FilmListing` component, down to the `FilmRow` component, down to the `Fave` component.
+<details>
+  <summary>The call to the <code>Fave</code> component should look like this:</summary>
+  <code>< Fave isFave={this.props.isFave} onFaveToggle={() => {this.props.onFaveToggle(this.props.film)} } /></code>
+</details>
 
 #### Step 15: Pass `isFave` down from `FilmListing` through `FilmRow`
 
@@ -187,7 +181,7 @@ The `Fave` component is also expecting to receive a prop called `isFave`, so you
 
 The `isFave` prop should be true or false depending on whether the film is in the `faves` array.
 
-In `FilmListing`, when creating each `FilmRow`, pass a prop called `isFave` whose value uses the [`Array.prototype.includes()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes) method to determine if the film is in the faves array or not.
+In `FilmListing`, when creating each `FilmRow`, pass a prop called `isFave` whose value uses the [`includes()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes) method to determine if the film is in the faves array or not.
 
 Now `FilmRow` is getting the `isFave` prop, but it doesn't need it. It only needs to pass it along. In `FilmRow`, pass that prop through to `Fave`.
 
