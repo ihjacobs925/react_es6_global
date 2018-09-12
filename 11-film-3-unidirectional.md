@@ -1,5 +1,5 @@
 # ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) You Do: Film Exercise - Unidirectional Flow
-
+------------------> TODO: fix the Mission statement below:
 ## Your Mission
 
 Stop any project you currently have running; let's go back to the film application that you've started. You can run the app with `npm start`.
@@ -9,13 +9,13 @@ You're almost finished! Now, you need to:
 - Add films to a user's faves
 - Filter the films the user is looking at
 
-To do this, you'll need to move your state up to the top of the component tree so all of the data is more easily shared across components. Remember unidirectional flow - data is going to go down the component tree, so you'll want our states as high as possible.
+To do this, you'll need to lift your state upwards so that all of the data is more easily shared across components. Remember unidirectional flow - data is *only* going to go *down* the component tree! Find the highest level of the tree in which there are two or more *sibling* components that need information about the same state; the state should reside in the parent of those components so it can be passed downward to all of them.
 
 ![](http://bitmakerhq.s3.amazonaws.com/resources/react-film-library-component-hierarchy.png)
 
 ### Task 1: Add State to the `App` Component
 
-Your `App` component will be the main place where states are set. From here, these states can be passed as props down to the other components.
+Since we want both the `FilmListing` *and* `FilmDetails` components to know which list of films we're wanting to view, your `App` component will be the main place where states are set. From here, these states can be passed as props down to the other components.
 
 #### Step 1: Add a constructor to `App.js`
 
@@ -40,7 +40,7 @@ Now that you have state stored on the `App` component, you want to pass those as
 Since you aren't doing anything with these props yet, nothing should change.
 
 ### Task 2: Move the `Fave` Event Handler up the Component Tree
-
+-----------------------> TODO: EXPLAIN WHY FILMDETAILS NEEDS FAVES OR A BETTER EXPLAINATION FOR WHY WE'RE MOVING IT UP TO APP
 When a user favorites a film, that information needs to be shared with the rest of your components.
 - For example, `FilmListing` needs to know which films are favorites to enable the filter.
 
