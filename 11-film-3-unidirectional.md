@@ -1,5 +1,5 @@
 # ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) You Do: Film Exercise - Unidirectional Flow
-------------------> TODO: fix the Mission statement below:
+
 ## Your Mission
 
 Stop any project you currently have running; let's go back to the film application that you've started. You can run the app with `npm start`.
@@ -13,9 +13,7 @@ To do this, you'll need to lift your state upwards so that all of the data is mo
 
 ![](http://bitmakerhq.s3.amazonaws.com/resources/react-film-library-component-hierarchy.png)
 
-### Task 1: Add State to the `App` Component
-
-Since we want both the `FilmListing` *and* `FilmDetails` components to know which list of films we're wanting to view, your `App` component will be the main place where states are set. From here, these states can be passed as props down to the other components.
+### Task 1: Add State to the Appropriate Components
 
 #### Step 1: Add a constructor to `App.js`
 
@@ -40,7 +38,7 @@ Now that you have state stored on the `App` component, you want to pass those as
 Since you aren't doing anything with these props yet, nothing should change.
 
 ### Task 2: Move the `Fave` Event Handler up the Component Tree
------------------------> TODO: EXPLAIN WHY FILMDETAILS NEEDS FAVES OR A BETTER EXPLAINATION FOR WHY WE'RE MOVING IT UP TO APP
+-----> TODO: FIND OUT WHY FILMDETAILS NEEDS FAVES AND IF IT DOESN'T, THEN MOVE THAT STATE DOWN TO FILMLISTING
 When a user favorites a film, that information needs to be shared with the rest of your components.
 - For example, `FilmListing` needs to know which films are favorites to enable the filter.
 
