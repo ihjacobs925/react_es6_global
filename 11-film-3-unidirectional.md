@@ -145,13 +145,13 @@ Otherwise, if you called the copy `newfaves`, for example, you'll need to write 
 this.setState({faves: newFaves})
 ```
 
-#### Step 11: Pass the `onFaveToggle` function to `FilmRow` through props
+#### Step 11: Pass the `handleFaveToggle` function to `FilmRow` through props
 
 In the `FilmListing` component, you render one `FilmRow` component for each film in the `films` prop. You need to pass the `onFaveToggle` function down to each `FilmRow`.
  
 <details>
   <summary>Your map function should look like this:</summary>
-  <code> const allFilms = this.props.films.map((film) => {return ( < FilmRow film={film} onFaveToggle {this.props.onFaveToggle} /> )}); </code>
+  <code> const allFilms = this.props.films.map((film) => {return ( < FilmRow film={film} onFaveToggle {this.handleFaveToggle} /> )}); </code>
 </details>
 
 #### Step 12: Pass the `onFaveToggle` function to `Fave` through props
