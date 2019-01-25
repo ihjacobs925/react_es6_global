@@ -177,8 +177,9 @@ In `FilmListing`, when creating each `FilmRow`, pass a prop called `isFave` whos
 
 <details>
   <summary>The call to the <code>FilmRow</code> component should now look like this:</summary>
-  <code><FilmRow film={film} onFaveToggle={this.handleFaveToggle} isFave={this.state.faves.includes(film)}/></code>
+  <code>< FilmRow film={film} onFaveToggle={this.handleFaveToggle} isFave={this.state.faves.includes(film)}/></code>
 </details>
+
 
 Now `FilmRow` is getting the `isFave` prop, but it doesn't need it. It only needs to pass it along. In `FilmRow`, pass that prop through to `Fave`.
 
