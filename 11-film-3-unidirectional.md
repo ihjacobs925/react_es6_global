@@ -222,8 +222,11 @@ Add a conditional in `FilmListing` so that if the `filter` state is set to `fave
 <details>
   <summary>Hint:</summary>
   <code>
+    
     const filmsToDisplay = this.state.filter==="all" ? this.props.films : this.state.faves;
+    
     const allFilms = filmsToDisplay.map((film) =>{
+    
   </code>
 </details>
 
