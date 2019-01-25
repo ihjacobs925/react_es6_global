@@ -89,7 +89,7 @@ You'll define `onFaveToggle` in a higher component.
 
 The `Fave` component is expecting a prop, but one doesn't exist yet. Let's change that next.
 
-You'll move the favorite toggle functionality all the way up to the `FilmListing` component - where the state for `filter`.
+You'll move the favorite toggle functionality all the way up to the `FilmListing` component - where the state for `filter` is.
 - In the `FilmListing` component, create a `handleFaveToggle()` function. It doesn't need to do anything yet, but soon you will update the `faves` array when a film is favorited or unfavorited. The `handleFaveToggle` function should accept a film object as an argument (this will be the film that the user is toggling).
 
 #### Step 5: Bind the handler to the component (skip if using arrow functions)
@@ -108,7 +108,7 @@ To recap, the `faves` state is going to hold the user's favorite films. Your goa
 
 To do this, you need to call `setState` and give it the updated array (you can't just update it directly; otherwise React won't know to re-render the components to reflect the changes). To accomplish this, you'll make a copy of the existing faves array, update it, then pass the copy to `setState`.
 
-First, just make a copy. Inside `handleFaveToggle`, use the JavaScript [`slice()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice) method to make a copy and store it in a `const` variable called `faves`. [`Why slice?`](https://stackoverflow.com/questions/7486085/copying-array-by-value-in-javascript)
+First, just make a copy. Inside `handleFaveToggle`, use the JavaScript [`slice()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice) method to make a copy and store it in a `const` variable called `newFaves`. [`Why slice?`](https://stackoverflow.com/questions/7486085/copying-array-by-value-in-javascript)
 
 #### Step 7: Find the index of the passed film in the `faves` array
 
@@ -121,16 +121,16 @@ Now, `filmIndex` will be an index value starting at `0`.
 If the film is found in the array, `indexOf()` will return an index value starting at `0`. Conversely, `indexOf()` will return `-1` if the element isn't found - if the film it's looking for is not currently in the `faves` array.
 
 Since this `handleFaveToggle()` function is designed to change the array of the user's favorites film, there are two options.
-- If the film is already in their favorites, then when the user clicks the button, they want to remove it from their favorites. You need to take it out of the `faves` array.
-- If the film is not in their favorites, then when the user clicks the button, they want to add it to their favorites. You need to add it to the `faves` array.
+* If the film is already in their favorites, then when the user clicks the button, they want to remove it from their favorites. You need to take it out of the `newFaves` array.
+* If the film is not in their favorites, then when the user clicks the button, they want to add it to their favorites. You need to add it to the `newFaves` array.
 
-Write a conditional statement with the two cases. When adding a film to `faves`, log out `Adding [FILM NAME] to faves...` and when removing a film from `faves`, log out `Removing [FILM NAME] from faves...`.
+Write a conditional statement with the two cases. When adding a film to `faves`, log out `Adding [FILM NAME] to faves...` and when removing a film from `newFaves`, log out `Removing [FILM NAME] from faves...`.
 
 #### Step 9: Change whether the film is in `faves`
 
-To remove a film that's already in the `faves` array, use the [`splice()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice) method.
+To remove a film that's already in the `newFaves` array, use the [`splice()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice) method.
 
-To add a new film to the `faves` array, just [push](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push) it on to the end of the array.
+To add a new film to the `newFaves` array, just [push](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push) it on to the end of the array.
 
 #### Step 10: Use `setState` to update the state of `faves`
 
