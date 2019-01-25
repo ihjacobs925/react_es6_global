@@ -17,24 +17,29 @@ To do this, you'll need to lift your state upwards so that all of the data is mo
 
 #### Step 1: Add a constructor to `App.js`
 
-In `App.js`, start by creating a constructor. Your constructor should accept a `props` argument and should call `super()`.
+In `App.js`, start by creating a constructor. Your constructor should call `super()`.
 
 #### Step 2: Initialize the state object
 
-Now, set three states:
+Now, set two states:
 
 1. `films`: initialize this key to hold a reference to `TMDB.films`
-3. `current`: this key should start off as an empty object
+2. `current`: this key should start off as an empty object
 
 #### Step 3: Pass state values to `FilmListing` and `FilmDetails` as props
 
 Now that you have state stored on the `App` component, you want to pass those as props to your child components. Just change `App.js` for now:
 
-- `FilmListing` should receive a `films` prop that now references your state's `films` property and a `faves` prop that should reference your state's `faves` property.
+- `FilmListing` should receive a `films` prop that now references the `App.js` `films` state.
 
-- `FilmDetails` should receive a `film` prop that references your state's `current` property.
+- `FilmDetails` should receive a `film` prop that references the `App.js` `current` state.
 
 Since you aren't doing anything with these props yet, nothing should change.
+
+#### Step 4: Add a `Faves` state to `FilmListing.js`
+
+In `FilmListing.js`, create a constructor that calls `super()` and sets the state to have one property, `faves`, which is initialized as an empty array.
+
 
 ### Task 2: Move the `Fave` Event Handler up the Component Tree
 When a user favorites a film, that information needs to be shared with the `FilmListing` component and all it's children in order to properly filter the list.
