@@ -158,11 +158,11 @@ In the `FilmListing` component, you render one `FilmRow` component for each film
 
 Now each `FilmRow` component has an `onFaveToggle` prop, but ultimately it's the `Fave` component that will call it. Note that in order to call `onFaveToggle`, we'll need to pass in *which* film as a parameter.
 
-In the `FilmRow` component's `render` method, pass the `onFaveToggle` to the fave component. Be sure to wrap it in an anonymous arrow function so you can include the current film as a parameter.
+In the `FilmRow` component's `render` method, pass the `onFaveToggle` to the `Fave` component. Be sure to wrap it in an anonymous arrow function so you can include the current film as a parameter.
 
 <details>
   <summary>The call to the <code>Fave</code> component should look like this:</summary>
-  <code>< Fave isFave={this.props.isFave} onFaveToggle={() => {this.props.onFaveToggle(this.props.film)} } /></code>
+  <code><Fave onFaveToggle={() => {this.props.onFaveToggle(this.props.film)} } /></code>
 </details>
 
 #### Step 13: Pass `isFave` down from `FilmListing` through `FilmRow`
@@ -174,6 +174,11 @@ The `Fave` component is also expecting to receive a prop called `isFave`, so you
 The `isFave` prop should be true or false depending on whether the film is in the `faves` array.
 
 In `FilmListing`, when creating each `FilmRow`, pass a prop called `isFave` whose value uses the [`includes()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes) method to determine if the film is in the faves array or not.
+
+<details>
+  <summary>The call to the <code>FilmRow</code> component should now look like this:</summary>
+  <code><FilmRow film={film} onFaveToggle={this.handleFaveToggle} isFave={this.state.faves.includes(film)}/></code>
+</details>
 
 Now `FilmRow` is getting the `isFave` prop, but it doesn't need it. It only needs to pass it along. In `FilmRow`, pass that prop through to `Fave`.
 
@@ -195,16 +200,29 @@ Great job! Check it out in your browser.
 
 ### Task 3: Move the details event handler up component tree from `FilmRow`
 
-In `FilmRow`, there's still the function to handle when a user clicks a row for more details.
+In `FilmRow`, there's still the function to handle when a user clicks a row for more details. The `FilmDetails` component needs to know which movie to show details for though, so we'll need to move the `handleDetailsClick` to `App.js`, since it is the parent of both `FilmListing` AND `FilmDetails`. `handleDetailsClick` will change the `current` state.
 
-Following the same steps as you did for the `Fave` event handler, move the `handleDetailsClick` definition to the `App` component.
+* Move the `handleDetailsClick` definition to the `App` component.
+* Pass `handleDetailsClick` to `FilmListing` as a prop.
+* Pass `handleDetailsClick` to `FilmRow` as a prop.
+* In the `onClick` of `FilmRow`, wrap the `handleDetailsClick` prop in an anonymous function so you can pass in the `film` prop.
 
-For `handleDetailsClick` in the `App` component, just log to the console and set the `current` state to the passed film for now. You'll handle looking up film details later. Make sure you pass the `current` state as a `film` prop to the `FilmDetails` component.
+For `handleDetailsClick` in the `App` component, just log to the console and set the `current` state to the passed film for now. You'll handle looking up film details later. Makesure you pass the `current` state as a `film` prop to the `FilmDetails` component.
 
 ### Task 4: Make the filter work on `FilmListing`
 
 You have the `filter` state on `FilmListing`, but you still need to make it actually change the UI. You're not going to move the `filter` state because this filter only affects the `FilmListing`, not any other parts of the app.
 
 Add a conditional in `FilmListing` so that if the `filter` state is set to `faves`, the listing only shows films in the faves array. Otherwise, it shows all films.
+
+* In the `render` method, define a constant called `filmsToDisplay` and us a turnery statement to return all the films, or just the favorite films.
+* Change your `allFilms` map function to be called on `filmsToDisplay` instead of `this.props.films`.
+
+
+<details>
+  <summary>Hint:</summary>
+  <code>const filmsToDisplay = this.state.filter==="all" ? this.props.films : this.state.faves;</code>
+  <code>const allFilms = filmsToDisplay.map((film) =>{</code> ... etc
+</details>
 
 Try it out - you should be able to add films to your favorites and view just your favorites list by clicking that tab.
