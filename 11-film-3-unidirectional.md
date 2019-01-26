@@ -38,7 +38,7 @@ Since you aren't doing anything with these props yet, nothing should change.
 
 #### Step 4: Add a `Faves` state to `FilmListing.js`
 
-In `FilmListing.js`, create a constructor that calls `super()` and sets the state to have one property, `faves`, which is initialized as an empty array.
+In `FilmListing.js`, add a `faves` state, which is initialized as an empty array.
 
 
 ### Task 2: Move the `Fave` Event Handler up the Component Tree
