@@ -104,21 +104,20 @@ this.handleFaveToggle = this.handleFaveToggle.bind(this)
 
 #### Step 6: Clone the `faves` state
 
-To recap, the `faves` state is going to hold the user's favorite films. Your goal is to, when the user clicks the icon to favorite or unfavorite a film, either add or remove the given film from the `faves` array.
+To recap, the `faves` state is going to hold the user's favorite films. **Your goal is to, when the user clicks the icon to favorite or unfavorite a film, either add or remove the given film from the `faves` array.**
 
 To do this, you need to call `setState` and give it the updated array (you can't just update it directly; otherwise React won't know to re-render the components to reflect the changes). To accomplish this, you'll make a copy of the existing faves array, update it, then pass the copy to `setState`.
 
-First, just make a copy. Inside `handleFaveToggle`, use the JavaScript [`slice()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice) method to make a copy and store it in a `const` variable called `newFaves`. [`Why slice?`](https://stackoverflow.com/questions/7486085/copying-array-by-value-in-javascript)
+First, just make a copy. Inside `handleFaveToggle`, use the JavaScript [`slice()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice) method to make a copy and store it in a `let` variable called `newFaves`. [`Why slice?`](https://stackoverflow.com/questions/7486085/copying-array-by-value-in-javascript). You can also use the [spread operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) to make a copy. (For example `let newArray = [...oldArray];`).
 
 #### Step 7: Find the index of the passed film in the `faves` array
 
-Now underneath the slice, use the JavaScript [`indexOf()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf) method to store the position of the film in the array in a `const` variable called `filmIndex`.
+Now underneath the new array, use the JavaScript [`indexOf()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf) method to store the position of the film in the array in a `const` variable called `filmIndex`.
 
-Now, `filmIndex` will be an index value starting at `0`.
+
+If the film is found in the array, `indexOf()` will return an index value starting at `0`. Conversely, `indexOf()` will return `-1` if the element isn't found - if the film it's looking for is not currently in the `faves` array. Now, `filmIndex` will either be an index value starting at `0` or `-1`.
 
 #### Step 8: Set up a conditional for adding or removing film from the `faves` array
-
-If the film is found in the array, `indexOf()` will return an index value starting at `0`. Conversely, `indexOf()` will return `-1` if the element isn't found - if the film it's looking for is not currently in the `faves` array.
 
 Since this `handleFaveToggle()` function is designed to change the array of the user's favorites film, there are two options.
 * If the film is already in their favorites, then when the user clicks the button, they want to remove it from their favorites. You need to take it out of the `newFaves` array.
@@ -134,12 +133,7 @@ To add a new film to the `newFaves` array, just [push](https://developer.mozilla
 
 #### Step 10: Use `setState` to update the state of `faves`
 
-Now that you have updated the `faves` array, you need to call `setState` so React will re-render the appropriate components in the tree. If you called the copy of the `faves` array the same name (`faves`), then you can make this very succinct by using object literal shorthand. It should look like this:
-
-```js
-this.setState({faves})
-```
-Otherwise, if you called the copy `newfaves`, for example, you'll need to write out the entire key-value pair:
+Now that you have updated the `faves` array, you need to call `setState` so React will re-render the appropriate components in the tree.
 
 ```js
 this.setState({faves: newFaves})
@@ -162,7 +156,8 @@ In the `FilmRow` component's `render` method, pass the `onFaveToggle` to the `Fa
 
 <details>
   <summary>The call to the <code>Fave</code> component should look like this:</summary>
-  <code><Fave onFaveToggle={() => {this.props.onFaveToggle(this.props.film)} } /></code>
+  
+  <code> <Fave onFaveToggle={() => {this.props.onFaveToggle(this.props.film)} } /> </code>
 </details>
 
 #### Step 13: Pass `isFave` down from `FilmListing` through `FilmRow`
@@ -177,7 +172,7 @@ In `FilmListing`, when creating each `FilmRow`, pass a prop called `isFave` whos
 
 <details>
   <summary>The call to the <code>FilmRow</code> component should now look like this:</summary>
-  <code>< FilmRow film={film} onFaveToggle={this.handleFaveToggle} isFave={this.state.faves.includes(film)}/></code>
+  <code> <FilmRow film={film} onFaveToggle={this.handleFaveToggle} isFave={this.state.faves.includes(film)}/> </code>
 </details>
 
 
@@ -226,7 +221,7 @@ Add a conditional in `FilmListing` so that if the `filter` state is set to `fave
     
     const filmsToDisplay = this.state.filter==="all" ? this.props.films : this.state.faves;
     
-    const allFilms = filmsToDisplay.map((film) =>{
+    const allFilms = filmsToDisplay.map((film) => { .... })
     
   </code>
 </details>
